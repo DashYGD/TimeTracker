@@ -76,11 +76,11 @@ def create_report():
         summary.columns = ["Process", "Used Time"]
         summary["Used Time"] = summary["Used Time"].apply(lambda x: f"{x:.2f} min")
         report_text.delete(1.0, tk.END)
-        report_text.insert(tk.END, "Usage Summary (in minutes):\n" + print_centered_dataframe(summary))
+        report_text.insert(tk.END, "Usage Summary (in minutes):\n" + print_dataframe(summary))
     except Exception as e:
         messagebox.showerror("Error", f"Failed to create report: {e}")
 
-def print_centered_dataframe(df):
+def print_dataframe(df):
     max_widths = {col: max(df[col].astype(str).map(len).max(), len(col)) for col in df.columns}
     header = " | ".join(f"{col:^{max_widths[col]}}" for col in df.columns)
     output = header + "\n" + "-" * len(header) + "\n"
@@ -165,7 +165,7 @@ refresh_button.pack(side=tk.LEFT, padx=5)
 clear_all_button = tk.Button(button_frame, text="Clear All", command=clear_all)
 clear_all_button.pack(side=tk.LEFT, padx=5)
 
-selected_processes_label = tk.Text(frame_left, width=60, height=3, wrap=tk.WORD, bg=root.cget("bg"), borderwidth=1, relief="solid")
+selected_processes_label = tk.Text(frame_left, width=60, height=20, wrap=tk.WORD, bg=root.cget("bg"), borderwidth=1, relief="solid")
 selected_processes_label.pack(pady=10)
 selected_processes_label.config(state=tk.DISABLED)
 
